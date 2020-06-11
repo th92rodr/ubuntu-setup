@@ -1,4 +1,19 @@
 ############
+# GIT
+
+echo 'installing git' 
+sudo apt install git -y
+
+echo 'what name do you want to use in GIT user.name?'
+read git_config_user_name
+git config --global user.name "$git_config_user_name"
+
+echo 'what email do you want to use in GIT user.email?'
+read git_config_user_email
+git config --global user.email $git_config_user_email
+clear
+
+############
 # ZSH
 
 # https://dev.to/mskian/install-z-shell-oh-my-zsh-on-ubuntu-1804-lts-4cm4
