@@ -13,3 +13,14 @@ git clone https://github.com/dracula/zsh.git ~/.dracula
 cp .dracula/dracula.zsh-theme .oh-my-zsh/themes/
 cp -r .dracula/lib/ .oh-my-zsh/themes/
 sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/g' ~/.zshrc
+
+# https://github.com/zsh-users/zsh-autosuggestions
+# https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+echo 'installing zsh autosuggestions'
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' ~/.zshrc
+
+source ~/.zshrc
+chsh -s /bin/zsh
+
+############
