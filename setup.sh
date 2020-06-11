@@ -34,3 +34,9 @@ dpkg -i bat.deb
 # https://github.com/sharkdp/fd/releases
 curl https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -o fd.deb
 dpkg -i fd.deb
+
+# https://github.com/jonas/tig
+# https://github.com/jonas/tig/blob/master/INSTALL.adoc
+git clone git://github.com/jonas/tig.git ~/Downloads
+(cd ~/Downloads/tig/ && make)
+(cd ~/Downloads/tig/ && make install)
