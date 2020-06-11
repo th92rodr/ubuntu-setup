@@ -29,3 +29,8 @@ chsh -s /bin/zsh
 # https://github.com/sharkdp/bat/releases
 curl https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -o bat.deb
 dpkg -i bat.deb
+
+# https://github.com/sharkdp/fd
+# https://github.com/sharkdp/fd/releases
+curl https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -o fd.deb
+dpkg -i fd.deb
