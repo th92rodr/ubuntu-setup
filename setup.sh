@@ -24,3 +24,8 @@ source ~/.zshrc
 chsh -s /bin/zsh
 
 ############
+
+# https://github.com/sharkdp/bat
+# https://github.com/sharkdp/bat/releases
+curl https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -o bat.deb
+dpkg -i bat.deb
