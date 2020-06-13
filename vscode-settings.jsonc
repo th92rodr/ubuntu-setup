@@ -1,0 +1,142 @@
+{
+  "workbench.startupEditor": "none",
+  "editor.minimap.enabled": true,
+  "explorer.openEditors.visible": 0,
+  "explorer.compactFolders": false,
+
+  "window.newWindowDimensions": "maximized",
+  "window.openFilesInNewWindow": "off",
+  "window.openFoldersInNewWindow": "on",
+  "window.restoreWindows": "all",
+  "window.closeWhenEmpty": false,
+
+  "editor.renderLineHighlight": "gutter",
+  "workbench.editor.labelFormat": "short",
+  "workbench.editor.highlightModifiedTabs": true,
+  "breadcrumbs.enabled": true,
+  "breadcrumbs.filePath": "on",
+
+  "workbench.colorCustomizations": {
+    // Gutter indicators (left)
+    "editorGutter.modifiedBackground": "#0000",
+    "editorGutter.addedBackground": "#0000",
+    "editorGutter.deletedBackground": "#0000"
+    // Scrollbar indicators (right)
+    //"editorOverviewRuler.addedForeground": "#0000",
+    //"editorOverviewRuler.modifiedForeground": "#0000",
+    //"editorOverviewRuler.deletedForeground": "#0000",
+  },
+
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+
+  "editor.suggestSelection": "first",
+  "extensions.ignoreRecommendations": true,
+
+  "window.zoomLevel": 1,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'Yeon Sung'",
+  "editor.fontWeight": "400",
+  "editor.fontSize": 18,
+  "editor.lineHeight": 0,
+  "editor.letterSpacing": 0,
+  "workbench.colorTheme": "One Monokai",
+  //"workbench.colorTheme": "Nord",
+
+  "files.trimTrailingWhitespace": true,
+  "editor.trimAutoWhitespace": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  "editor.cursorStyle": "line",
+  "editor.cursorBlinking": "expand",
+  //"editor.cursorStyle": "underline",
+  //"editor.cursorBlinking": "smooth",
+
+  "workbench.statusBar.visible": true,
+  "git.enableStatusBarSync": false,
+  "git.autofetch": true,
+
+  "files.watcherExclude": {
+    "**/.git/**": true,
+    "**/node_modules/*/**": true,
+    "**/dist/**": true,
+    "**/dist-prod/**": true
+  },
+
+  "typescript.suggest.autoImports": true,
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2
+  },
+
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.suggest.autoImports": true,
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2
+  },
+
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+  },
+
+  "python.jediEnabled": false,
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  },
+
+  "go.formatTool": "gofmt",
+  "go.lintTool": "golint",
+  "go.autocompleteUnimportedPackages": true,
+  "[go]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.wordWrap": "on",
+    "editor.renderWhitespace": "all",
+    "editor.acceptSuggestionOnEnter": "off"
+  },
+
+  // Bracket Pair Colorizer
+  "bracketPairColorizer.colorMode": "Consecutive",
+  "bracketPairColorizer.highlightActiveScope": true,
+  "bracketPairColorizer.activeScopeCSS": [
+    "borderStyle : solid",
+    "borderWidth : 1px",
+    "borderColor : {color}; opacity: 0.5"
+  ],
+
+  // Code Spell Checker
+  "cSpell.enabled": true,
+  "cSpell.showStatus": false,
+  "cSpell.words": [],
+
+  // Visual Studio IntelliCode
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+
+  // C
+  "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 2, ColumnLimit: 0, SpacesBeforeTrailingComments: 3, PointerAlignment: Right, Cpp11BracedListStyle: false }"
+}
