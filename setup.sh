@@ -24,6 +24,16 @@ sudo apt-get install apt-transport-https -y
 sudo apt-get update
 sudo apt-get install code -y
 
+# https://code.visualstudio.com/docs/editor/extension-gallery?pub=esbenp
+echo 'installing vscode extensions'
+code --install-extension VisualStudioExptTeam.vscodeintellicode
+code --install-extension christian-kohler.path-intellisense
+code --install-extension streetsidesoftware.code-spell-checker
+code --install-extension CoenraadS.bracket-pair-colorizer
+code --install-extension eamodio.gitlens
+code --install-extension esbenp.prettier-vscode
+code --install-extension arcticicestudio.nord-visual-studio-code
+
 ############
 # ZSH
 
