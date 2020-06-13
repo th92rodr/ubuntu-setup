@@ -1,7 +1,7 @@
 ############
 # GIT
 
-echo 'installing git' 
+echo 'installing git'
 sudo apt install git -y
 
 echo 'what name do you want to use in GIT user.name?'
@@ -28,6 +28,12 @@ git clone https://github.com/dracula/zsh.git ~/.dracula
 cp .dracula/dracula.zsh-theme .oh-my-zsh/themes/
 cp -r .dracula/lib/ .oh-my-zsh/themes/
 sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/g' ~/.zshrc
+
+# https://draculatheme.com/gnome-terminal/
+echo 'installing gnome terminal dracula theme'
+sudo apt-get install dconf-cli
+git clone https://github.com/dracula/gnome-terminal
+(cd gnome-terminal/ && install.sh)
 
 # https://github.com/zsh-users/zsh-autosuggestions
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
