@@ -1,0 +1,12 @@
+[alias]
+	st = status
+	co = commit -m
+	ch = checkout
+	cm = checkout master
+	cb = checkout -b
+	unstage = reset HEAD --
+  	undo = checkout --
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+[user]
+	email = ""
+	name = ""
