@@ -11,6 +11,9 @@ git config --global user.name "$git_config_user_name"
 echo 'what email do you want to use in GIT user.email?'
 read git_config_user_email
 git config --global user.email $git_config_user_email
+
+git config --global core.editor "code --wait"
+
 clear
 
 ############
