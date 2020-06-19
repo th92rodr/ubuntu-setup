@@ -85,3 +85,15 @@ dpkg -i fd.deb
 git clone git://github.com/jonas/tig.git ~/Downloads
 (cd ~/Downloads/tig/ && make)
 (cd ~/Downloads/tig/ && make install)
+
+############
+
+echo 'installing docker'
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
