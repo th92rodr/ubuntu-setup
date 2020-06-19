@@ -97,3 +97,7 @@ sudo apt-get install \
     curl \
     gnupg-agent \
     software-properties-common
+
+############
+
+sudo apt install gnome-tweaks
