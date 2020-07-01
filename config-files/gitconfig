@@ -1,3 +1,7 @@
+[user]
+	email = ""
+	name = ""
+
 [alias]
 	st = status
 	co = commit -m
@@ -8,8 +12,6 @@
   	undo = checkout --
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	lg = log --pretty=format:'%Cred%h%Creset %C(bold)%cr%Creset %Cgreen<%an>%Creset %s' --max-count=30
-[user]
-	email = ""
-	name = ""
+
 [core]
 	editor = code --wait
