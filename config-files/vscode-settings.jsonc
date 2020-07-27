@@ -90,10 +90,20 @@
     "editor.formatOnPaste": true,
     "editor.tabSize": 2
   },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2
+  },
 
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.suggest.autoImports": true,
   "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2
+  },
+  "[javascriptreact]": {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.tabSize": 2
