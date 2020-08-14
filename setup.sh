@@ -1,9 +1,14 @@
+#!/bin/bash
 
 apt update
 apt upgrade -y
 
-echo -e "\e[32m installing curl \e[0m"
+echo -e "\e[32m \n installing curl \e[0m"
 apt install curl -y
+echo -e "\e[32m \n installing wget \e[0m"
+apt install wget -y
+echo -e "\e[32m \n installing gnome-tweaks \e[0m"
+apt install gnome-tweaks -y
 
 ############
 # GIT
@@ -109,10 +114,6 @@ sudo apt-get install \
     curl \
     gnupg-agent \
     software-properties-common
-
-############
-
-apt install gnome-tweaks
 
 ############
 
