@@ -29,26 +29,31 @@ git config --global core.editor "code --wait"
 clear
 
 ############
-# VS CODE
+# VSCODE
 
-# https://code.visualstudio.com/docs/setup/linux
-echo -e "\e[32m installing vscode \e[0m"
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt-get install apt-transport-https -y
-sudo apt-get update
-sudo apt-get install code -y
+read -p $'\e[34m \nDo you want to install VSCode ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://code.visualstudio.com/docs/setup/linux
+  echo -e "\e[32m \n installing... \e[0m"
+  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+  install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+  sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+  apt-get install apt-transport-https -y
+  apt-get update
+  apt-get install code -y
 
-# https://code.visualstudio.com/docs/editor/extension-gallery?pub=esbenp
-echo -e "\e[32m installing vscode extensions \e[0m"
-code --install-extension VisualStudioExptTeam.vscodeintellicode
-code --install-extension christian-kohler.path-intellisense
-code --install-extension streetsidesoftware.code-spell-checker
-code --install-extension CoenraadS.bracket-pair-colorizer
-code --install-extension eamodio.gitlens
-code --install-extension esbenp.prettier-vscode
-code --install-extension arcticicestudio.nord-visual-studio-code
+  # https://code.visualstudio.com/docs/editor/extension-gallery?pub=esbenp
+  echo -e "\e[32m \n installing VSCode extensions \e[0m"
+  sudo -u thiago code --install-extension VisualStudioExptTeam.vscodeintellicode
+  sudo -u thiago code --install-extension christian-kohler.path-intellisense
+  sudo -u thiago code --install-extension streetsidesoftware.code-spell-checker
+  sudo -u thiago code --install-extension CoenraadS.bracket-pair-colorizer
+  sudo -u thiago code --install-extension eamodio.gitlens
+  sudo -u thiago code --install-extension esbenp.prettier-vscode
+  sudo -u thiago code --install-extension arcticicestudio.nord-visual-studio-code
+
+  echo -e "\e[34m \nVSCode done \e[0m"
+fi
 
 ############
 # ZSH
