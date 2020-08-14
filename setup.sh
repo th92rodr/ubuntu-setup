@@ -127,15 +127,36 @@ fi
 ############
 # DOCKER
 
-echo -e "\e[32m installing docker \e[0m"
-sudo apt-get remove docker docker-engine docker.io containerd runc
-sudo apt-get update
-sudo apt-get install \
+read -p $'\e[34m \nDo you want to install Docker ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://docs.docker.com/engine/install/ubuntu/
+  echo -e "\e[32m \n installing... \e[0m"
+  apt-get remove docker docker-engine docker.io containerd runc
+  apt-get update
+  apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg-agent \
-    software-properties-common
+    software-properties-common -y
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+  apt-get update
+  apt-get install docker-ce docker-ce-cli containerd.io -y
+
+  sudo usermod -aG docker $user_name
+
+  echo -e "\e[34m \nDocker done \e[0m"
+
+  # https://docs.docker.com/compose/install/
+  # https://github.com/docker/compose/releases
+  echo -e "\e[32m \n installing docker compose... \e[0m"
+  curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+
+  echo -e "\e[34m \nDocker Compose done \e[0m"
+fi
 
 ############
 # NODE
