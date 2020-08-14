@@ -138,16 +138,27 @@ sudo apt-get install \
     software-properties-common
 
 ############
+# NODE
 
-# https://nodejs.org/en/
-# https://github.com/nodesource/distributions/blob/master/README.md
-echo -e "\e[32m installing node \e[0m"
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-apt-get install -y nodejs
+read -p $'\e[34m \nDo you want to install Node ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://nodejs.org/en/
+  # https://github.com/nodesource/distributions/blob/master/README.md
+  echo -e "\e[32m installing... \e[0m"
+  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+  apt-get install -y nodejs
 
-# https://classic.yarnpkg.com/en/
-# https://classic.yarnpkg.com/en/docs/install#debian-stable
-echo -e "\e[32m installing yarn \e[0m"
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-apt install yarn
+  echo -e "\e[34m \nNode done \e[0m"
+fi
+
+read -p $'\e[34m \nDo you want to install yarn ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://classic.yarnpkg.com/en/
+  # https://classic.yarnpkg.com/en/docs/install#debian-stable
+  echo -e "\e[32m installing... \e[0m"
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  apt install yarn -y
+
+  echo -e "\e[34m \nyarn done \e[0m"
+fi
