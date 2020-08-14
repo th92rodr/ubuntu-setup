@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo -e "\e[32m \nWhat is your user name? \e[0m"
+read user_name
+
 apt update
 apt upgrade -y
 
