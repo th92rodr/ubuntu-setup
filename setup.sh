@@ -88,24 +88,41 @@ chsh -s /bin/zsh
 
 ############
 
-# https://github.com/sharkdp/bat
-# https://github.com/sharkdp/bat/releases
-echo -e "\e[32m installing bat \e[0m"
-curl https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -o bat.deb
-dpkg -i bat.deb
+read -p $'\e[34m \nDo you want to install bat ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://github.com/sharkdp/bat
+  # https://github.com/sharkdp/bat/releases
+  echo -e "\e[32m \n installing... \e[0m"
+  wget https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -O bat.deb
+  dpkg -i bat.deb
+  rm bat.deb
 
-# https://github.com/sharkdp/fd
-# https://github.com/sharkdp/fd/releases
-echo -e "\e[32m installing fd \e[0m"
-curl https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -o fd.deb
-dpkg -i fd.deb
+  echo -e "\e[34m \nbat done \e[0m"
+fi
 
-# https://github.com/jonas/tig
-# https://github.com/jonas/tig/blob/master/INSTALL.adoc
-echo -e "\e[32m installing tig \e[0m"
-git clone git://github.com/jonas/tig.git ~/Downloads
-(cd ~/Downloads/tig/ && make)
-(cd ~/Downloads/tig/ && make install)
+read -p $'\e[34m \nDo you want to install fd ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://github.com/sharkdp/fd
+  # https://github.com/sharkdp/fd/releases
+  echo -e "\e[32m \n installing... \e[0m"
+  wget https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -O fd.deb
+  dpkg -i fd.deb
+  rm fd.deb
+
+  echo -e "\e[34m \nfd done \e[0m"
+fi
+
+read -p $'\e[34m \nDo you want to install tig ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://github.com/jonas/tig
+  # https://github.com/jonas/tig/blob/master/INSTALL.adoc
+  echo -e "\e[32m \n installing... \e[0m"
+  git clone git://github.com/jonas/tig.git
+  (cd ./tig/ && make)
+  (cd ./tig/ && make install)
+
+  echo -e "\e[34m \ntig done \e[0m"
+fi
 
 ############
 # DOCKER
