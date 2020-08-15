@@ -61,33 +61,40 @@ fi
 ############
 # ZSH
 
-# https://dev.to/mskian/install-z-shell-oh-my-zsh-on-ubuntu-1804-lts-4cm4
-echo -e "\e[32m installing zsh \e[0m"
-sudo apt install zsh
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+read -p $'\e[34m \nDo you want to install ZSH ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://dev.to/mskian/install-z-shell-oh-my-zsh-on-ubuntu-1804-lts-4cm4
+  echo -e "\e[32m \n installing... \e[0m"
+  apt install zsh -y
+  git clone https://github.com/robbyrussell/oh-my-zsh.git /home/$user_name/.oh-my-zsh
+  cp /home/$user_name/.oh-my-zsh/templates/zshrc.zsh-template /home/$user_name/.zshrc
 
-# https://draculatheme.com/zsh/
-echo -e "\e[32m installing zsh dracula theme \e[0m"
-git clone https://github.com/dracula/zsh.git ~/.dracula
-cp .dracula/dracula.zsh-theme .oh-my-zsh/themes/
-cp -r .dracula/lib/ .oh-my-zsh/themes/
-sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/g' ~/.zshrc
+  # https://draculatheme.com/zsh/
+  echo -e "\e[32m \n installing ZSH dracula theme \e[0m"
+  git clone https://github.com/dracula/zsh.git /home/$user_name/.dracula
+  cp /home/$user_name/.dracula/dracula.zsh-theme /home/$user_name/.oh-my-zsh/themes/
+  cp -r /home/$user_name/.dracula/lib/ /home/$user_name/.oh-my-zsh/themes/
+  sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/g' /home/$user_name/.zshrc
 
-# https://draculatheme.com/gnome-terminal/
-echo -e "\e[32m installing gnome terminal dracula theme \e[0m"
-sudo apt-get install dconf-cli
-git clone https://github.com/dracula/gnome-terminal
-(cd gnome-terminal/ && install.sh)
+  # https://draculatheme.com/gnome-terminal/
+  echo -e "\e[32m \n installing gnome terminal dracula theme \e[0m"
+  apt-get install dconf-cli
+  git clone https://github.com/dracula/gnome-terminal /home/$user_name/gnome-terminal
+  (cd /home/$user_name/gnome-terminal/ && ./install.sh)
 
-# https://github.com/zsh-users/zsh-autosuggestions
-# https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-echo -e "\e[32m installing zsh autosuggestions \e[0m"
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' ~/.zshrc
+  # https://github.com/zsh-users/zsh-autosuggestions
+  # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+  echo -e "\e[32m \n installing ZSH autosuggestions \e[0m"
+  git clone https://github.com/zsh-users/zsh-autosuggestions /home/$user_name/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' /home/$user_name/.zshrc
 
-source ~/.zshrc
-chsh -s /bin/zsh
+  sed -i 's/ZSH=$HOME/.oh-my-zsh/ZSH=/home/$user_name/.oh-my-zsh/g' /home/$user_name/.zshrc
+
+  source /home/$user_name/.zshrc
+  chsh -s /bin/zsh
+
+  echo -e "\e[34m \nZSH done \e[0m"
+fi
 
 ############
 
