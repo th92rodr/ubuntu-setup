@@ -55,6 +55,8 @@ if [[ $answer = y ]] ; then
   sudo -u thiago code --install-extension esbenp.prettier-vscode
   sudo -u thiago code --install-extension arcticicestudio.nord-visual-studio-code
 
+  cp ./config-files/vscode-settings.jsonc /home/$user_name/.config/Code/User/settings.json
+
   echo -e "\e[34m \nVSCode done \e[0m"
 fi
 
@@ -130,6 +132,7 @@ if [[ $answer = y ]] ; then
   git clone git://github.com/jonas/tig.git
   (cd ./tig/ && make)
   (cd ./tig/ && make install)
+  rm -rf tig/
 
   echo -e "\e[34m \ntig done \e[0m"
 fi
@@ -193,3 +196,5 @@ if [[ $answer = y ]] ; then
 
   echo -e "\e[34m \nyarn done \e[0m"
 fi
+
+echo -e "\e[32m \n All set \e[0m"
