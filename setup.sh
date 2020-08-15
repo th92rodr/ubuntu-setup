@@ -16,20 +16,23 @@ apt install gnome-tweaks -y
 ############
 # GIT
 
-echo -e "\e[32m installing git \e[0m"
-sudo apt install git -y
+read -p $'\e[34m \nDo you want to install GIT ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  echo -e "\e[32m \n installing... \e[0m"
+  apt install git -y
 
-echo "\e[32m what name do you want to use in GIT user.name? \e[0m"
-read git_config_user_name
-git config --global user.name "$git_config_user_name"
+  echo -e "\e[32m \n what name do you want to use in GIT user.name? \e[0m"
+  read git_config_user_name
+  git config --global user.name $git_config_user_name
 
-echo "\e[32m what email do you want to use in GIT user.email? \e[0m"
-read git_config_user_email
-git config --global user.email $git_config_user_email
+  echo -e "\e[32m \n what email do you want to use in GIT user.email? \e[0m"
+  read git_config_user_email
+  git config --global user.email $git_config_user_email
 
-git config --global core.editor "code --wait"
+  git config --global core.editor "code --wait"
 
-clear
+  echo -e "\e[34m \nGIT done \e[0m"
+fi
 
 ############
 # VSCODE
