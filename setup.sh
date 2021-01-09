@@ -90,13 +90,15 @@ if [[ $answer = y ]] ; then
   # https://github.com/zsh-users/zsh-autosuggestions
   # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
   echo -e "\e[32m \n installing ZSH autosuggestions \e[0m"
+  rm -rf /home/$user_name/.oh-my-zsh/custom/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-autosuggestions /home/$user_name/.oh-my-zsh/custom/plugins/zsh-autosuggestions
   sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' /home/$user_name/.zshrc
-
   sed -i 's/ZSH=$HOME/.oh-my-zsh/ZSH=/home/$user_name/.oh-my-zsh/g' /home/$user_name/.zshrc
 
+  exec zsh
   source /home/$user_name/.zshrc
   chsh -s /bin/zsh
+  exec bash
 
   echo -e "\e[34m \nZSH done \e[0m"
 fi
@@ -133,6 +135,7 @@ if [[ $answer = y ]] ; then
   # https://github.com/jonas/tig/blob/master/INSTALL.adoc
   echo -e "\e[32m \n installing... \e[0m"
   git clone git://github.com/jonas/tig.git
+  apt-get install build-essential -y
   (cd ./tig/ && make)
   (cd ./tig/ && make install)
   rm -rf tig/
@@ -155,13 +158,13 @@ if [[ $answer = y ]] ; then
     curl \
     gnupg-agent \
     software-properties-common -y
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
   apt-get update
   apt-get install docker-ce docker-ce-cli containerd.io -y
 
-  sudo usermod -aG docker $user_name
+  usermod -aG docker $user_name
 
   echo -e "\e[34m \nDocker done \e[0m"
 
@@ -169,7 +172,7 @@ if [[ $answer = y ]] ; then
   # https://github.com/docker/compose/releases
   echo -e "\e[32m \n installing docker compose... \e[0m"
   curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  sudo chmod +x /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
 
   echo -e "\e[34m \nDocker Compose done \e[0m"
 fi
@@ -193,8 +196,8 @@ if [[ $answer = y ]] ; then
   # https://classic.yarnpkg.com/en/
   # https://classic.yarnpkg.com/en/docs/install#debian-stable
   echo -e "\e[32m installing... \e[0m"
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-  echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
   apt install yarn -y
 
   echo -e "\e[34m \nyarn done \e[0m"
