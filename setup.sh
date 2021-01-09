@@ -233,4 +233,24 @@ export GOPATH=\$GOPATH:/home/$user_name/code" >> /home/$user_name/.zshrc
   echo -e "\e[34m \ngolang done \e[0m"
 fi
 
+############
+# Google Cloud SDK
+
+read -p $'\e[34m \nDo you want to install Google Cloud SDK ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://cloud.google.com/sdk/docs/install#deb
+  echo -e "\e[32m installing... \e[0m"
+
+  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  apt-get install apt-transport-https ca-certificates gnupg -y
+  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+  apt-get update
+  apt-get install google-cloud-sdk -y
+
+  # execute the following to configure
+  # gcloud init
+
+  echo -e "\e[34m \ngcloud done \e[0m"
+fi
+
 echo -e "\e[32m \n All set \e[0m"
