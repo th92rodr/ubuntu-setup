@@ -203,4 +203,34 @@ if [[ $answer = y ]] ; then
   echo -e "\e[34m \nyarn done \e[0m"
 fi
 
+############
+# Golang
+
+read -p $'\e[34m \nDo you want to install golang ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  echo -e "\e[32m installing... \e[0m"
+
+  wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz -O go.tar.gz
+  tar -C /usr/local -xzf go.tar.gz
+
+  echo "export PATH=\$PATH:/usr/local/go/bin
+export GOPATH=/home/$user_name/golib
+export PATH=\$PATH:\$GOPATH/bin
+export GOPATH=\$GOPATH:/home/$user_name/code" >> /home/$user_name/.bashrc
+  source /home/$user_name/.bashrc
+
+  echo "export PATH=\$PATH:/usr/local/go/bin
+export GOPATH=/home/$user_name/golib
+export PATH=\$PATH:\$GOPATH/bin
+export GOPATH=\$GOPATH:/home/$user_name/code" >> /home/$user_name/.zshrc
+  # exec zsh
+  # source /home/$user_name/.zshrc
+  # exec bash
+
+  go get -u golang.org/x/lint/golint
+  go get -u github.com/golang/dep/cmd/dep
+
+  echo -e "\e[34m \ngolang done \e[0m"
+fi
+
 echo -e "\e[32m \n All set \e[0m"
