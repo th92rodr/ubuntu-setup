@@ -13,8 +13,14 @@ apt install wget -y
 echo -e "\e[32m \n installing gnome-tweaks \e[0m"
 apt install gnome-tweaks -y
 
+clear_screen () {
+  echo -e "\033c"
+}
+
 ############
 # GIT
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install GIT ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
@@ -36,6 +42,8 @@ fi
 
 ############
 # VSCODE
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install VSCode ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
@@ -65,6 +73,8 @@ fi
 
 ############
 # ZSH
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install ZSH ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
@@ -104,6 +114,8 @@ if [[ $answer = y ]] ; then
 fi
 
 ############
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install bat ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
@@ -146,6 +158,8 @@ fi
 ############
 # DOCKER
 
+clear_screen
+
 read -p $'\e[34m \nDo you want to install Docker ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
   # https://docs.docker.com/engine/install/ubuntu/
@@ -180,6 +194,8 @@ fi
 ############
 # NODE
 
+clear_screen
+
 read -p $'\e[34m \nDo you want to install Node ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
   # https://nodejs.org/en/
@@ -205,6 +221,8 @@ fi
 
 ############
 # Golang
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install golang ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
@@ -236,6 +254,8 @@ fi
 ############
 # Google Cloud SDK
 
+clear_screen
+
 read -p $'\e[34m \nDo you want to install Google Cloud SDK ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
   # https://cloud.google.com/sdk/docs/install#deb
@@ -255,6 +275,8 @@ fi
 
 ############
 # Kubernetes
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install Kubernetes CLI ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
@@ -285,6 +307,8 @@ fi
 
 ############
 # Postman
+
+clear_screen
 
 read -p $'\e[34m \nDo you want to install Postman ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
