@@ -283,4 +283,30 @@ if [[ $answer = y ]] ; then
   echo -e "\e[34m \nkubernetes done \e[0m"
 fi
 
+############
+# Postman
+
+read -p $'\e[34m \nDo you want to install Postman ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://www.postman.com/downloads/
+  echo -e "\e[32m installing... \e[0m"
+
+  wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
+  tar -xzf postman.tar.gz
+  mv Postman /opt
+  rm postman.tar.gz
+
+  # create desktop shortcut
+  touch /usr/share/applications/postman.desktop
+  echo "[Desktop Entry]
+Type=Application
+Name=Postman
+Icon=/opt/Postman/app/resources/app/assets/icon.png
+Exec="/opt/Postman/Postman"
+Comment=Postman Desktop App
+Categories=Development;Code;" > postman.desktop
+
+  echo -e "\e[34m \npostman done \e[0m"
+fi
+
 echo -e "\e[32m \n All set \e[0m"
