@@ -253,4 +253,34 @@ if [[ $answer = y ]] ; then
   echo -e "\e[34m \ngcloud done \e[0m"
 fi
 
+############
+# Kubernetes
+
+read -p $'\e[34m \nDo you want to install Kubernetes CLI ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://kubernetes.io/docs/tasks/tools/install-kubectl/
+  echo -e "\e[32m installing... \e[0m"
+
+  curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+  chmod +x ./kubectl
+  mv ./kubectl /usr/local/bin/kubectl
+
+  # autocompletion
+  apt-get install bash-completion
+  echo "source <(kubectl completion bash)" >> /home/$user_name/.bashrc
+
+  echo "source <(kubectl completion zsh)" >> /home/$user_name/.zshrc
+
+  # kubectx
+  # https://github.com/ahmetb/kubectx
+  wget https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubectx_v0.9.1_linux_x86_64.tar.gz
+  wget https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubens_v0.9.1_linux_x86_64.tar.gz
+  tar -xzf kubectx_v0.9.1_linux_x86_64.tar.gz
+  tar -xzf kubens_v0.9.1_linux_x86_64.tar.gz
+  mv kubectx kubens /usr/local/bin
+  rm -rf kubectx_v0.9.1_linux_x86_64.tar.gz kubens_v0.9.1_linux_x86_64.tar.gz
+
+  echo -e "\e[34m \nkubernetes done \e[0m"
+fi
+
 echo -e "\e[32m \n All set \e[0m"
