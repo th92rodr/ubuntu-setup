@@ -364,6 +364,24 @@ Categories=Development;Code;" > /usr/share/applications/postman.desktop
   echo -e "\e[34m \npostman done \e[0m"
 fi
 
+############
+# Homebrew
+
+read -p $'\e[34m \nDo you want to install Homebrew ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://brew.sh/
+  # Will be installed at /home/linuxbrew/.linuxbrew
+  echo -e "\e[32m installing... \e[0m"
+  sudo -u $user_name /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/$user_name/.profile
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+  source /home/$user_name/.profile
+
+  echo -e "\e[34m \nhomebrew done \e[0m"
+fi
+
 apt autoremove -y
 apt autoclean
 
