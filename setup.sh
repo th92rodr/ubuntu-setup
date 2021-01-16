@@ -383,6 +383,38 @@ if [[ $answer = y ]] ; then
 fi
 
 ############
+# Java
+
+read -p $'\e[34m \nDo you want to install Java ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://openjdk.java.net/install/
+  wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz -O jdk11.tar.gz
+  mkdir /usr/lib/jvm
+  tar -C /usr/lib/jvm -xvf jdk11.tar.gz
+  rm jdk11.tar.gz
+
+  echo "# JAVA
+export PATH=\$PATH:/usr/lib/jvm/jdk-11/bin
+export JAVA_HOME=/usr/lib/jvm/jdk-11" >> /home/$user_name/.bashrc
+
+  echo "# JAVA
+export PATH=\$PATH:/usr/lib/jvm/jdk-11/bin
+export JAVA_HOME=/usr/lib/jvm/jdk-11" >> /home/$user_name/.zshrc
+
+  # https://maven.apache.org/install.html
+  wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -O apache-maven.tar.gz
+  tar -C /opt -xzvf apache-maven.tar.gz
+  rm apache-maven.tar.gz
+  mv /opt/apache-maven-3.6.3 /opt/apache-maven
+
+  echo "export PATH=\$PATH:/opt/apache-maven/bin" >> /home/$user_name/.bashrc
+
+  echo "export PATH=\$PATH:/opt/apache-maven/bin" >> /home/$user_name/.zshrc
+
+  echo -e "\e[34m \njava done \e[0m"
+fi
+
+############
 # Pyenv
 
 read -p $'\e[34m \nDo you want to install Pyenv ? [y,n] \e[0m' answer
