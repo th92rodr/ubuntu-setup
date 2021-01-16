@@ -13,6 +13,9 @@ apt install wget -y
 echo -e "\e[32m \n installing gnome-tweaks \e[0m"
 apt install gnome-tweaks -y
 
+apt-get install gcc g++ make -y
+apt-get install build-essential -y
+
 clear_screen () {
   echo -e "\033c"
 }
@@ -26,6 +29,8 @@ read -p $'\e[34m \nDo you want to install GIT ? [y,n] \e[0m' answer
 if [[ $answer = y ]] ; then
   echo -e "\e[32m \n installing... \e[0m"
   apt install git -y
+
+  cp ./config-files/gitconfig /home/$user_name/.gitconfig
 
   echo -e "\e[32m \n what name do you want to use in GIT user.name? \e[0m"
   read git_config_user_name
@@ -105,10 +110,10 @@ if [[ $answer = y ]] ; then
   sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' /home/$user_name/.zshrc
   sed -i 's/ZSH=$HOME/.oh-my-zsh/ZSH=/home/$user_name/.oh-my-zsh/g' /home/$user_name/.zshrc
 
-  exec zsh
-  source /home/$user_name/.zshrc
-  chsh -s /bin/zsh
-  exec bash
+  /bin/zsh << 'EOF'
+source /home/thiago/.zshrc
+chsh -s /bin/zsh
+EOF
 
   echo -e "\e[34m \nZSH done \e[0m"
 fi
@@ -146,13 +151,21 @@ if [[ $answer = y ]] ; then
   # https://github.com/jonas/tig
   # https://github.com/jonas/tig/blob/master/INSTALL.adoc
   echo -e "\e[32m \n installing... \e[0m"
-  git clone git://github.com/jonas/tig.git
-  apt-get install build-essential -y
-  (cd ./tig/ && make)
-  (cd ./tig/ && make install)
-  rm -rf tig/
+  # git clone git://github.com/jonas/tig.git
+  # (cd ./tig/ && make)
+  # (cd ./tig/ && make install)
+  # rm -rf tig/
+
+  brew install tig
 
   echo -e "\e[34m \ntig done \e[0m"
+fi
+
+read -p $'\e[34m \nDo you want to install fzf ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://github.com/junegunn/fzf
+  apt-get install fzf -y
+  echo -e "\e[34m \nfzf done \e[0m"
 fi
 
 ############
@@ -231,22 +244,39 @@ if [[ $answer = y ]] ; then
   wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz -O go.tar.gz
   tar -C /usr/local -xzf go.tar.gz
 
-  echo "export PATH=\$PATH:/usr/local/go/bin
+  echo "# Golang
+export PATH=\$PATH:/usr/local/go/bin
 export GOPATH=/home/$user_name/golib
 export PATH=\$PATH:\$GOPATH/bin
 export GOPATH=\$GOPATH:/home/$user_name/code" >> /home/$user_name/.bashrc
   source /home/$user_name/.bashrc
 
-  echo "export PATH=\$PATH:/usr/local/go/bin
+  echo "# Golang
+export PATH=\$PATH:/usr/local/go/bin
 export GOPATH=/home/$user_name/golib
 export PATH=\$PATH:\$GOPATH/bin
 export GOPATH=\$GOPATH:/home/$user_name/code" >> /home/$user_name/.zshrc
-  # exec zsh
-  # source /home/$user_name/.zshrc
-  # exec bash
+
+  mkdir -p /home/$user_name/code
+  mkdir -p /home/$user_name/golib
 
   go get -u golang.org/x/lint/golint
   go get -u github.com/golang/dep/cmd/dep
+  go get -u github.com/mdempsky/gocode
+  go get -u github.com/uudashr/gopkgs/v2/cmd/gopkgs
+  go get -u github.com/ramya-rao-a/go-outline
+  go get -u github.com/acroca/go-symbols
+  go get -u golang.org/x/tools/cmd/guru
+  go get -u golang.org/x/tools/cmd/gorename
+  go get -u github.com/cweill/gotests/...
+  go get -u github.com/fatih/gomodifytags
+  go get -u github.com/josharian/impl
+  go get -u github.com/davidrjenni/reftools/cmd/fillstruct
+  go get -u github.com/haya14busa/goplay/cmd/goplay
+  go get -u github.com/godoctor/godoctor
+  go get -u github.com/go-delve/delve/cmd/dlv
+  go get -u github.com/stamblerre/gocode
+  go get -u github.com/rogpeppe/godef
 
   echo -e "\e[34m \ngolang done \e[0m"
 fi
@@ -317,7 +347,8 @@ if [[ $answer = y ]] ; then
 
   wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
   tar -xzf postman.tar.gz
-  mv Postman /opt
+  rm -rf /opt/Postman
+  mv -f Postman /opt
   rm postman.tar.gz
 
   # create desktop shortcut
@@ -328,9 +359,12 @@ Name=Postman
 Icon=/opt/Postman/app/resources/app/assets/icon.png
 Exec="/opt/Postman/Postman"
 Comment=Postman Desktop App
-Categories=Development;Code;" > postman.desktop
+Categories=Development;Code;" > /usr/share/applications/postman.desktop
 
   echo -e "\e[34m \npostman done \e[0m"
 fi
+
+apt autoremove -y
+apt autoclean
 
 echo -e "\e[32m \n All set \e[0m"
