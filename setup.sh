@@ -382,6 +382,31 @@ if [[ $answer = y ]] ; then
   echo -e "\e[34m \nhomebrew done \e[0m"
 fi
 
+############
+# Pyenv
+
+read -p $'\e[34m \nDo you want to install Pyenv ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://github.com/pyenv/pyenv
+  brew update
+  brew install pyenv
+  echo -e "\e[34m \npyenv done \e[0m"
+fi
+
+############
+# Protoc
+
+read -p $'\e[34m \nDo you want to install Protoc ? [y,n] \e[0m' answer
+if [[ $answer = y ]] ; then
+  # https://google.github.io/proto-lens/installing-protoc.html
+  PROTOC_ZIP=protoc-3.14.0.-linux-x86_64.zip
+  curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/$PROTOC_ZIP
+  unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
+  unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
+  rm -f $PROTOC_ZIP
+  echo -e "\e[34m \nprotoc done \e[0m"
+fi
+
 apt autoremove -y
 apt autoclean
 
