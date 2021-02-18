@@ -70,6 +70,7 @@ if [[ $answer = y ]] ; then
   sudo -u thiago code --install-extension eamodio.gitlens
   sudo -u thiago code --install-extension esbenp.prettier-vscode
   sudo -u thiago code --install-extension arcticicestudio.nord-visual-studio-code
+  sudo -u thiago code --install-extension azemoh.one-monokai
 
   cp ./config-files/vscode-settings.jsonc /home/$user_name/.config/Code/User/settings.json
 
