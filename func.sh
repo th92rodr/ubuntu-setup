@@ -9,6 +9,7 @@ func_initial () {
 func_final () {
   sudo apt autoremove -y
   sudo apt autoclean
+  sudo apt clean
 }
 
 fn_git () {
@@ -59,6 +60,7 @@ fn_homebrew () {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/$USER/.profile
+  # echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/$USER/.bashrc
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
   source /home/$USER/.profile
@@ -89,6 +91,8 @@ fn_vscode () {
 }
 
 fn_golang () {
+  # https://go.dev/doc/install
+  # https://go.dev/dl/
   echo -e "\e[32mInstalling Golang\e[0m"
 
   wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz -O go.tar.gz
@@ -176,6 +180,8 @@ fn_kubernetes () {
   tar -xzf kubens_v0.9.1_linux_x86_64.tar.gz
   mv kubectx kubens /usr/local/bin
   rm -rf kubectx_v0.9.1_linux_x86_64.tar.gz kubens_v0.9.1_linux_x86_64.tar.gz
+
+  # brew install kubectx
 }
 
 fn_gcs () {
@@ -194,7 +200,7 @@ fn_gcs () {
 
 fn_protoc () {
   # https://google.github.io/proto-lens/installing-protoc.html
-  PROTOC_ZIP=protoc-3.14.0.-linux-x86_64.zip
+  PROTOC_ZIP=protoc-3.14.0-linux-x86_64.zip
   curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/$PROTOC_ZIP
   unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
   unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
@@ -288,6 +294,8 @@ fn_bat () {
   wget https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -O bat.deb
   dpkg -i bat.deb
   rm bat.deb
+
+  # apt install bat
 }
 
 fn_fd () {
