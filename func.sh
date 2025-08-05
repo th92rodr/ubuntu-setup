@@ -101,6 +101,30 @@ install_vscode () {
   fi
 }
 
+install_docker () {
+  # https://docs.docker.com/engine/install/ubuntu/
+  # https://docs.docker.com/compose/install/
+  # https://github.com/docker/compose/releases
+
+  if ! command -v docker &>/dev/null; then
+    log info "Installing docker"
+
+    sudo apt update
+    sudo apt install apt-transport-https ca-certificates gnupg-agent software-properties-common -y
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" -y
+    sudo apt update
+    sudo apt install docker-ce docker-ce-cli containerd.io -y
+
+    log info "Installing docker compose"
+
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+  else
+    log info "docker already installed"
+  fi
+}
+
 fn_node () {
   # https://nodejs.org/en/
   # https://github.com/nodesource/distributions/blob/master/README.md
@@ -157,32 +181,6 @@ export GOPATH=\$GOPATH:/home/$USER/code" >> /home/$USER/.zshrc
   go get -u github.com/go-delve/delve/cmd/dlv
   go get -u github.com/stamblerre/gocode
   go get -u github.com/rogpeppe/godef
-}
-
-fn_docker () {
-  # https://docs.docker.com/engine/install/ubuntu/
-  echo -e "\e[32mInstalling Docker\e[0m"
-  sudo apt-get remove docker docker-engine docker.io containerd runc
-  sudo apt-get update
-  sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common -y
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-  sudo apt-get update
-  sudo apt-get install docker-ce docker-ce-cli containerd.io -y
-
-  usermod -aG docker $USER
-
-  # https://docs.docker.com/compose/install/
-  # https://github.com/docker/compose/releases
-  echo -e "\e[32mInstalling Docker Compose\e[0m"
-  curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  chmod +x /usr/local/bin/docker-compose
 }
 
 fn_kubernetes () {
