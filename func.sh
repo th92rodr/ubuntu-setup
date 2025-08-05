@@ -61,6 +61,46 @@ install_homebrew () {
   fi
 }
 
+install_vscode () {
+  # https://code.visualstudio.com/docs/setup/linux
+  # https://code.visualstudio.com/docs/editor/extension-gallery?pub=esbenp
+
+  if ! command -v code &>/dev/null; then
+    log info "Installing vscode"
+
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+    sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+    rm -f packages.microsoft.gpg
+    sudo apt install apt-transport-https -y
+    sudo apt update
+    sudo apt install code -y
+
+    log info "Installing vscode extensions"
+    code --install-extension visualstudioexptteam.vscodeintellicode
+    code --install-extension christian-kohler.path-intellisense
+    code --install-extension streetsidesoftware.code-spell-checker
+    # code --install-extension coenraads.bracket-pair-colorizer
+    code --install-extension eamodio.gitlens
+    code --install-extension golang.go
+    code --install-extension biomejs.biome
+    code --install-extension esbenp.prettier-vscode
+    code --install-extension prisma.prisma
+    code --install-extension mikestead.dotenv
+    code --install-extension ms-python.python
+    code --install-extension humao.rest-client
+    code --install-extension alexcvzz.vscode-sqlite
+    code --install-extension bradlc.vscode-tailwindcss
+    code --install-extension beardedbear.beardedicons
+    code --install-extension miguelsolorio.min-theme
+    # code --install-extension azemoh.one-monokai
+
+    cp ./config-files/vscode-settings.jsonc $HOME/.config/Code/User/settings.json
+  else
+    log info "vscode already installed"
+  fi
+}
+
 fn_node () {
   # https://nodejs.org/en/
   # https://github.com/nodesource/distributions/blob/master/README.md
@@ -74,30 +114,6 @@ fn_node () {
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
   sudo apt install yarn -y
-}
-
-fn_vscode () {
-  # https://code.visualstudio.com/docs/setup/linux
-  echo -e "\e[32mInstalling VSCode\e[0m"
-  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-  install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-  sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-  sudo apt install apt-transport-https -y
-  sudo apt update
-  sudo apt install code -y
-
-  # https://code.visualstudio.com/docs/editor/extension-gallery?pub=esbenp
-  echo -e "\e[32mInstalling VSCode Extensions\e[0m"
-  code --install-extension VisualStudioExptTeam.vscodeintellicode
-  code --install-extension christian-kohler.path-intellisense
-  code --install-extension streetsidesoftware.code-spell-checker
-  code --install-extension CoenraadS.bracket-pair-colorizer
-  code --install-extension eamodio.gitlens
-  code --install-extension esbenp.prettier-vscode
-  code --install-extension arcticicestudio.nord-visual-studio-code
-  code --install-extension azemoh.one-monokai
-
-  cp ./config-files/vscode-settings.jsonc /home/$USER/.config/Code/User/settings.json
 }
 
 fn_golang () {
