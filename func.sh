@@ -154,6 +154,23 @@ install_yarn () {
   fi
 }
 
+install_tig () {
+  # https://github.com/jonas/tig
+  # https://github.com/jonas/tig/blob/master/INSTALL.adoc
+
+  if ! command -v tig &>/dev/null; then
+    log info "Installing tig"
+
+    brew install tig
+    # git clone git://github.com/jonas/tig.git
+    # (cd ./tig/ && make)
+    # (cd ./tig/ && make install)
+    # rm -rf tig/
+  else
+    log info "tig already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -343,18 +360,6 @@ fn_fd () {
   wget https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -O fd.deb
   dpkg -i fd.deb
   rm fd.deb
-}
-
-fn_tig () {
-  # https://github.com/jonas/tig
-  # https://github.com/jonas/tig/blob/master/INSTALL.adoc
-  echo -e "\e[32mInstalling TIG\e[0m"
-  # git clone git://github.com/jonas/tig.git
-  # (cd ./tig/ && make)
-  # (cd ./tig/ && make install)
-  # rm -rf tig/
-
-  brew install tig
 }
 
 fn_fzf () {
