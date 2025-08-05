@@ -125,19 +125,33 @@ install_docker () {
   fi
 }
 
-fn_node () {
+install_node () {
   # https://nodejs.org/en/
   # https://github.com/nodesource/distributions/blob/master/README.md
-  echo -e "\e[32mInstalling Node\e[0m"
-  curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-  sudo apt install nodejs -y
 
+  if ! command -v node &>/dev/null; then
+    log info "Installing node"
+
+    curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+    sudo apt install nodejs -y
+  else
+    log info "node already installed"
+  fi
+}
+
+install_yarn () {
   # https://classic.yarnpkg.com/en/
   # https://classic.yarnpkg.com/en/docs/install#debian-stable
-  echo -e "\e[32mInstalling Yarn\e[0m"
-  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-  sudo apt install yarn -y
+
+  if ! command -v yarn &>/dev/null; then
+    log info "Installing yarn"
+
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    sudo apt install yarn -y
+  else
+    log info "yarn already installed"
+  fi
 }
 
 fn_golang () {
