@@ -26,30 +26,23 @@ func_final () {
   sudo apt clean
 }
 
-fn_git () {
-  if [ $1 -eq 1 ]; then
-    echo -e "\e[32mInstalling GIT\e[0m"
+install_git () {
+  if ! command -v git &>/dev/null; then
+    log info "Installing git"
     sudo apt install git -y
-    if [ $? -ne 0 ]; then
-      echo "failed"
-    fi
+
+    log info "git username:"
+    read git_config_user_name
+    log info "git email:"
+    read git_config_user_email
+
+    cp ./config-files/gitconfig $HOME/.gitconfig
+    git config --global user.name $git_config_user_name
+    git config --global user.email $git_config_user_email
+    git config --global core.editor "code --wait"
+  else
+    log info "git already installed"
   fi
-
-  # cp ./config-files/gitconfig /home/$USER/.gitconfig
-  cp ./config-files/gitconfig /home/$USER/www/gitconfig
-  if [ $? -ne 0 ]; then
-    echo "failed"
-  fi
-
-  # echo -e "\e[32mwhat name do you want to use in GIT user.name?\e[0m"
-  # read git_config_user_name
-  # git config --global user.name $git_config_user_name
-
-  # echo -e "\e[32mwhat email do you want to use in GIT user.email?\e[0m"
-  # read git_config_user_email
-  # git config --global user.email $git_config_user_email
-
-  # git config --global core.editor "code --wait"
 }
 
 fn_node () {
