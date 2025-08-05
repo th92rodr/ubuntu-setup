@@ -1,5 +1,19 @@
 #!/bin/bash
 
+log() {
+  local level="$1"
+  local msg="$2"
+  local color=""
+  case "$level" in
+    info) color="\033[1;36m";;
+    success) color="\033[1;32m";;
+    warn) color="\033[1;33m";;
+    error) color="\033[1;35m";;
+    *) color="";;
+  esac
+  echo -e "${color}[$(date)] $msg\033[0m"
+}
+
 func_initial () {
   sudo apt update && sudo apt upgrade -y
   sudo apt install curl wget gnome-tweaks \
