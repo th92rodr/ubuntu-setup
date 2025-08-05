@@ -45,6 +45,22 @@ install_git () {
   fi
 }
 
+install_homebrew () {
+  # https://brew.sh/
+  # Will be installed at /home/linuxbrew/.linuxbrew
+
+  if ! command -v brew &>/dev/null; then
+    log info "Installing homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    echo >> $HOME/.bashrc
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $HOME/.bashrc
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  else
+    log info "homebrew already installed"
+  fi
+}
+
 fn_node () {
   # https://nodejs.org/en/
   # https://github.com/nodesource/distributions/blob/master/README.md
@@ -58,19 +74,6 @@ fn_node () {
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
   sudo apt install yarn -y
-}
-
-fn_homebrew () {
-  # https://brew.sh/
-  # Will be installed at /home/linuxbrew/.linuxbrew
-  echo -e "\e[32mInstalling Homebrew\e[0m"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/$USER/.profile
-  # echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/$USER/.bashrc
-  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-
-  source /home/$USER/.profile
 }
 
 fn_vscode () {
