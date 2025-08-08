@@ -183,6 +183,21 @@ install_pyenv () {
   fi
 }
 
+install_bat () {
+  # https://github.com/sharkdp/bat
+  # https://github.com/sharkdp/bat/releases
+
+  if ! command -v bat &>/dev/null; then
+    log info "Installing bat"
+
+    wget https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -O bat.deb
+    sudo dpkg -i bat.deb
+    rm bat.deb
+  else
+    log info "bat already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -352,17 +367,6 @@ fn_zsh () {
 source ~/.zshrc
 chsh -s /bin/zsh
 EOF
-}
-
-fn_bat () {
-  # https://github.com/sharkdp/bat
-  # https://github.com/sharkdp/bat/releases
-  echo -e "\e[32mInstalling BAT\e[0m"
-  wget https://github.com/sharkdp/bat/releases/download/v0.15.4/bat-musl_0.15.4_amd64.deb -O bat.deb
-  dpkg -i bat.deb
-  rm bat.deb
-
-  # apt install bat
 }
 
 fn_fd () {
