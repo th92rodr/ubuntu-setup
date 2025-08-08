@@ -171,6 +171,18 @@ install_tig () {
   fi
 }
 
+install_pyenv () {
+  # https://github.com/pyenv/pyenv
+
+  if ! command -v pyenv &>/dev/null; then
+    log info "Installing pyenv"
+    brew update
+    brew install pyenv
+  else
+    log info "pyenv already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -365,12 +377,6 @@ fn_fd () {
 fn_fzf () {
   # https://github.com/junegunn/fzf
   sudo apt-get install fzf -y
-}
-
-fn_pyenv () {
-  # https://github.com/pyenv/pyenv
-  brew update
-  brew install pyenv
 }
 
 clear_screen () {
