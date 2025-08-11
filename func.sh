@@ -198,6 +198,21 @@ install_bat () {
   fi
 }
 
+install_fd () {
+  # https://github.com/sharkdp/fd
+  # https://github.com/sharkdp/fd/releases
+
+  if ! command -v fd &>/dev/null; then
+    log info "Installing fd"
+
+    wget https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -O fd.deb
+    sudo dpkg -i fd.deb
+    rm fd.deb
+  else
+    log info "fd already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -367,15 +382,6 @@ fn_zsh () {
 source ~/.zshrc
 chsh -s /bin/zsh
 EOF
-}
-
-fn_fd () {
-  # https://github.com/sharkdp/fd
-  # https://github.com/sharkdp/fd/releases
-  echo -e "\e[32mInstalling FD\e[0m"
-  wget https://github.com/sharkdp/fd/releases/download/v8.1.1/fd-musl_8.1.1_amd64.deb -O fd.deb
-  dpkg -i fd.deb
-  rm fd.deb
 }
 
 fn_fzf () {
