@@ -224,6 +224,22 @@ install_fzf () {
   fi
 }
 
+install_protoc () {
+  # https://google.github.io/proto-lens/installing-protoc.html
+
+  if ! command -v protoc &>/dev/null; then
+    log info "Installing protoc"
+
+    PROTOC_ZIP=protoc-3.14.0-linux-x86_64.zip
+    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/$PROTOC_ZIP
+    sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
+    sudo unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
+    rm -f $PROTOC_ZIP
+  else
+    log info "protoc already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -304,15 +320,6 @@ fn_gcs () {
 
   # execute the following to configure
   # gcloud init
-}
-
-fn_protoc () {
-  # https://google.github.io/proto-lens/installing-protoc.html
-  PROTOC_ZIP=protoc-3.14.0-linux-x86_64.zip
-  curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/$PROTOC_ZIP
-  unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
-  unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
-  rm -f $PROTOC_ZIP
 }
 
 fn_postman () {
