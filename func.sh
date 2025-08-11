@@ -213,6 +213,17 @@ install_fd () {
   fi
 }
 
+install_fzf () {
+  # https://github.com/junegunn/fzf
+
+  if ! command -v fzf &>/dev/null; then
+    log info "Installing fzf"
+    sudo apt install fzf -y
+  else
+    log info "fzf already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -382,11 +393,6 @@ fn_zsh () {
 source ~/.zshrc
 chsh -s /bin/zsh
 EOF
-}
-
-fn_fzf () {
-  # https://github.com/junegunn/fzf
-  sudo apt-get install fzf -y
 }
 
 clear_screen () {
