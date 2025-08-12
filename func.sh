@@ -240,6 +240,38 @@ install_protoc () {
   fi
 }
 
+install_kubernetes () {
+  # https://kubernetes.io/docs/tasks/tools/install-kubectl/
+  # https://github.com/ahmetb/kubectx
+
+  if ! command -v kubectl &>/dev/null; then
+    log info "Installing kubernetes cli"
+
+    curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x ./kubectl
+    sudo mv ./kubectl /usr/local/bin/kubectl
+
+    # autocompletion
+    sudo apt install bash-completion -y
+    echo >> $HOME/.bashrc
+    echo "source <(kubectl completion bash)" >> $HOME/.bashrc
+    echo >> $HOME/.zshrc
+    echo "source <(kubectl completion zsh)" >> $HOME/.zshrc
+
+    # kubectx
+    wget https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubectx_v0.9.1_linux_x86_64.tar.gz
+    wget https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubens_v0.9.1_linux_x86_64.tar.gz
+    tar -xzf kubectx_v0.9.1_linux_x86_64.tar.gz
+    tar -xzf kubens_v0.9.1_linux_x86_64.tar.gz
+    sudo mv kubectx kubens /usr/local/bin
+    rm -rf kubectx_v0.9.1_linux_x86_64.tar.gz kubens_v0.9.1_linux_x86_64.tar.gz
+
+    # brew install kubectx
+  else
+    log info "kubernetes cli already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -281,31 +313,6 @@ export GOPATH=\$GOPATH:/home/$USER/code" >> /home/$USER/.zshrc
   go get -u github.com/go-delve/delve/cmd/dlv
   go get -u github.com/stamblerre/gocode
   go get -u github.com/rogpeppe/godef
-}
-
-fn_kubernetes () {
-  # https://kubernetes.io/docs/tasks/tools/install-kubectl/
-  echo -e "\e[32mInstalling Kubernetes CLI\e[0m"
-
-  curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-  chmod +x ./kubectl
-  mv ./kubectl /usr/local/bin/kubectl
-
-  # autocompletion
-  sudo apt-get install bash-completion -y
-  echo "source <(kubectl completion bash)" >> /home/$USER/.bashrc
-  echo "source <(kubectl completion zsh)" >> /home/$USER/.zshrc
-
-  # kubectx
-  # https://github.com/ahmetb/kubectx
-  wget https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubectx_v0.9.1_linux_x86_64.tar.gz
-  wget https://github.com/ahmetb/kubectx/releases/download/v0.9.1/kubens_v0.9.1_linux_x86_64.tar.gz
-  tar -xzf kubectx_v0.9.1_linux_x86_64.tar.gz
-  tar -xzf kubens_v0.9.1_linux_x86_64.tar.gz
-  mv kubectx kubens /usr/local/bin
-  rm -rf kubectx_v0.9.1_linux_x86_64.tar.gz kubens_v0.9.1_linux_x86_64.tar.gz
-
-  # brew install kubectx
 }
 
 fn_gcs () {
