@@ -272,6 +272,25 @@ install_kubernetes () {
   fi
 }
 
+install_gcloud () {
+  # https://cloud.google.com/sdk/docs/install#deb
+
+  if ! command -v gcloud &>/dev/null; then
+    log info "Installing google cloud sdk"
+
+    echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+    sudo apt install apt-transport-https ca-certificates gnupg -y
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+    sudo apt update
+    sudo apt install google-cloud-sdk -y
+
+    # execute the following to configure
+    # gcloud init
+  else
+    log info "google cloud sdk already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -313,20 +332,6 @@ export GOPATH=\$GOPATH:/home/$USER/code" >> /home/$USER/.zshrc
   go get -u github.com/go-delve/delve/cmd/dlv
   go get -u github.com/stamblerre/gocode
   go get -u github.com/rogpeppe/godef
-}
-
-fn_gcs () {
-  # https://cloud.google.com/sdk/docs/install#deb
-  echo -e "\e[32mInstalling Google Cloud SDK\e[0m"
-
-  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-  sudo apt-get install apt-transport-https ca-certificates gnupg -y
-  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-  sudo apt-get update
-  sudo apt-get install google-cloud-sdk -y
-
-  # execute the following to configure
-  # gcloud init
 }
 
 fn_postman () {
