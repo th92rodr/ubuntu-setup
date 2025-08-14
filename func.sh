@@ -291,6 +291,53 @@ install_gcloud () {
   fi
 }
 
+install_zsh () {
+  # https://dev.to/mskian/install-z-shell-oh-my-zsh-on-ubuntu-1804-lts-4cm4
+  # https://draculatheme.com/zsh/
+  # https://draculatheme.com/gnome-terminal/
+  # https://github.com/zsh-users/zsh-autosuggestions
+  # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+
+  if ! command -v zsh &>/dev/null; then
+    log info "Installing zsh"
+
+    ZSH_PATH=$HOME/.oh-my-zsh
+
+    sudo apt install zsh -y
+    git clone https://github.com/robbyrussell/oh-my-zsh.git $ZSH_PATH
+    cp $ZSH_PATH/templates/zshrc.zsh-template $HOME/.zshrc
+
+    log info "Installing zsh dracula theme"
+
+    git clone https://github.com/dracula/zsh.git $HOME/.dracula
+    cp $HOME/.dracula/dracula.zsh-theme $ZSH_PATH/themes/
+    cp -r $HOME/.dracula/lib/ $ZSH_PATH/themes/
+    rm -rf $HOME/.dracula
+    sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/g' $HOME/.zshrc
+
+    log info "Installing gnome terminal dracula theme"
+
+    sudo apt install dconf-cli -y
+    git clone https://github.com/dracula/gnome-terminal $HOME/gnome-terminal
+    (cd $HOME/gnome-terminal/ && ./install.sh)
+    rm -rf $HOME/gnome-terminal
+
+    log info "Installing zsh autosuggestions"
+
+    rm -rf $ZSH_PATH/custom/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PATH/custom/plugins/zsh-autosuggestions
+    sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' $HOME/.zshrc
+
+    /bin/zsh << 'EOF'
+source $HOME/.zshrc
+sudo chsh -s /bin/zsh
+EOF
+
+  else
+    log info "zsh already installed"
+  fi
+}
+
 fn_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
@@ -378,40 +425,6 @@ export JAVA_HOME=/usr/lib/jvm/jdk-11" >> /home/$USER/.zshrc
 
   echo "export PATH=\$PATH:/opt/apache-maven/bin" >> /home/$USER/.bashrc
   echo "export PATH=\$PATH:/opt/apache-maven/bin" >> /home/$USER/.zshrc
-}
-
-fn_zsh () {
-  # https://dev.to/mskian/install-z-shell-oh-my-zsh-on-ubuntu-1804-lts-4cm4
-  echo -e "\e[32m Installing ZSH\e[0m"
-  sudo apt install zsh -y
-  git clone https://github.com/robbyrussell/oh-my-zsh.git /home/$USER/.oh-my-zsh
-  cp /home/$USER/.oh-my-zsh/templates/zshrc.zsh-template /home/$USER/.zshrc
-
-  # https://draculatheme.com/zsh/
-  echo -e "\e[32mInstalling ZSH dracula theme\e[0m"
-  git clone https://github.com/dracula/zsh.git /home/$USER/.dracula
-  cp /home/$USER/.dracula/dracula.zsh-theme /home/$USER/.oh-my-zsh/themes/
-  cp -r /home/$USER/.dracula/lib/ /home/$USER/.oh-my-zsh/themes/
-  sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/g' /home/$USER/.zshrc
-
-  # https://draculatheme.com/gnome-terminal/
-  echo -e "\e[32mInstalling gnome terminal dracula theme\e[0m"
-  sudo apt-get install dconf-cli -y
-  git clone https://github.com/dracula/gnome-terminal /home/$USER/gnome-terminal
-  (cd /home/$USER/gnome-terminal/ && ./install.sh)
-
-  # https://github.com/zsh-users/zsh-autosuggestions
-  # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-  echo -e "\e[32mInstalling ZSH autosuggestions\e[0m"
-  rm -rf /home/$USER/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-  git clone https://github.com/zsh-users/zsh-autosuggestions /home/$USER/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-  sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' /home/$USER/.zshrc
-  sed -i 's/ZSH=$HOME/.oh-my-zsh/ZSH=/home/$USER/.oh-my-zsh/g' /home/$USER/.zshrc
-
-  /bin/zsh << 'EOF'
-source ~/.zshrc
-chsh -s /bin/zsh
-EOF
 }
 
 clear_screen () {
