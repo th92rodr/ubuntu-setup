@@ -381,25 +381,32 @@ export GOPATH=\$GOPATH:/home/$USER/code" >> /home/$USER/.zshrc
   go get -u github.com/rogpeppe/godef
 }
 
-fn_postman () {
+install_postman () {
   # https://www.postman.com/downloads/
-  echo -e "\e[32mInstalling Postman\e[0m"
 
-  wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
-  tar -xzf postman.tar.gz
-  rm -rf /opt/Postman
-  mv -f Postman /opt
-  rm postman.tar.gz
+  if ! command -v postman &>/dev/null; then
+    log info "Installing postman"
 
-  # create desktop shortcut
-  touch /usr/share/applications/postman.desktop
-  echo "[Desktop Entry]
+    wget https://dl.pstmn.io/download/latest/linux64 -O postman.tar.gz
+    tar -xzf postman.tar.gz
+    sudo rm -rf /opt/Postman
+    sudo mv -f Postman /opt
+    rm postman.tar.gz
+
+    sudo ln -sf /opt/Postman/Postman /usr/local/bin/postman
+
+    # create desktop shortcut
+    echo "[Desktop Entry]
 Type=Application
 Name=Postman
 Icon=/opt/Postman/app/resources/app/assets/icon.png
 Exec="/opt/Postman/Postman"
 Comment=Postman Desktop App
-Categories=Development;Code;" > /usr/share/applications/postman.desktop
+Categories=Development;Code;" > postman.desktop
+    sudo mv postman.desktop /usr/share/applications/
+  else
+    log info "postman already installed"
+  fi
 }
 
 fn_java () {
