@@ -338,47 +338,52 @@ EOF
   fi
 }
 
-fn_golang () {
+install_golang () {
   # https://go.dev/doc/install
   # https://go.dev/dl/
-  echo -e "\e[32mInstalling Golang\e[0m"
 
-  wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz -O go.tar.gz
-  tar -C /usr/local -xzf go.tar.gz
+  if ! command -v go &>/dev/null; then
+    log info "Installing golang"
 
-  echo "# Golang
+    wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz -O go.tar.gz
+    sudo tar -C /usr/local -xzf go.tar.gz
+    rm -rf go.tar.gz
+
+    dotfiles=(.bashrc .zshrc)
+    for dotfile in "${dotfiles[@]}"; do
+      if ! grep -q "/usr/local/go/bin" "$HOME/$dotfile"; then
+        echo "
+# Golang
 export PATH=\$PATH:/usr/local/go/bin
-export GOPATH=/home/$USER/golib
+export GOPATH=\$HOME/golib
 export PATH=\$PATH:\$GOPATH/bin
-export GOPATH=\$GOPATH:/home/$USER/code" >> /home/$USER/.bashrc
-  source /home/$USER/.bashrc
+export GOPATH=\$GOPATH:\$HOME/gocode" >> $HOME/$dotfile
+      fi
+    done
 
-  echo "# Golang
-export PATH=\$PATH:/usr/local/go/bin
-export GOPATH=/home/$USER/golib
-export PATH=\$PATH:\$GOPATH/bin
-export GOPATH=\$GOPATH:/home/$USER/code" >> /home/$USER/.zshrc
+    mkdir -p $HOME/gocode
+    mkdir -p $HOME/golib
 
-  mkdir -p /home/$USER/code
-  mkdir -p /home/$USER/golib
-
-  go get -u golang.org/x/lint/golint
-  go get -u github.com/golang/dep/cmd/dep
-  go get -u github.com/mdempsky/gocode
-  go get -u github.com/uudashr/gopkgs/v2/cmd/gopkgs
-  go get -u github.com/ramya-rao-a/go-outline
-  go get -u github.com/acroca/go-symbols
-  go get -u golang.org/x/tools/cmd/guru
-  go get -u golang.org/x/tools/cmd/gorename
-  go get -u github.com/cweill/gotests/...
-  go get -u github.com/fatih/gomodifytags
-  go get -u github.com/josharian/impl
-  go get -u github.com/davidrjenni/reftools/cmd/fillstruct
-  go get -u github.com/haya14busa/goplay/cmd/goplay
-  go get -u github.com/godoctor/godoctor
-  go get -u github.com/go-delve/delve/cmd/dlv
-  go get -u github.com/stamblerre/gocode
-  go get -u github.com/rogpeppe/godef
+    go get -u golang.org/x/lint/golint
+    go get -u github.com/golang/dep/cmd/dep
+    go get -u github.com/mdempsky/gocode
+    go get -u github.com/uudashr/gopkgs/v2/cmd/gopkgs
+    go get -u github.com/ramya-rao-a/go-outline
+    go get -u github.com/acroca/go-symbols
+    go get -u golang.org/x/tools/cmd/guru
+    go get -u golang.org/x/tools/cmd/gorename
+    go get -u github.com/cweill/gotests/...
+    go get -u github.com/fatih/gomodifytags
+    go get -u github.com/josharian/impl
+    go get -u github.com/davidrjenni/reftools/cmd/fillstruct
+    go get -u github.com/haya14busa/goplay/cmd/goplay
+    go get -u github.com/godoctor/godoctor
+    go get -u github.com/go-delve/delve/cmd/dlv
+    go get -u github.com/stamblerre/gocode
+    go get -u github.com/rogpeppe/godef
+  else
+    log info "golang already installed"
+  fi
 }
 
 install_postman () {
