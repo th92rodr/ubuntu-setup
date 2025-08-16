@@ -409,29 +409,36 @@ Categories=Development;Code;" > postman.desktop
   fi
 }
 
-fn_java () {
+install_java () {
   # https://openjdk.java.net/install/
-  wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz -O jdk11.tar.gz
-  mkdir /usr/lib/jvm
-  tar -C /usr/lib/jvm -xvf jdk11.tar.gz
-  rm jdk11.tar.gz
-
-  echo "# JAVA
-export PATH=\$PATH:/usr/lib/jvm/jdk-11/bin
-export JAVA_HOME=/usr/lib/jvm/jdk-11" >> /home/$USER/.bashrc
-
-  echo "# JAVA
-export PATH=\$PATH:/usr/lib/jvm/jdk-11/bin
-export JAVA_HOME=/usr/lib/jvm/jdk-11" >> /home/$USER/.zshrc
-
   # https://maven.apache.org/install.html
-  wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -O apache-maven.tar.gz
-  tar -C /opt -xzvf apache-maven.tar.gz
-  rm apache-maven.tar.gz
-  mv /opt/apache-maven-3.6.3 /opt/apache-maven
 
-  echo "export PATH=\$PATH:/opt/apache-maven/bin" >> /home/$USER/.bashrc
-  echo "export PATH=\$PATH:/opt/apache-maven/bin" >> /home/$USER/.zshrc
+  if ! command -v java &>/dev/null; then
+    log info "Installing java"
+
+    wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz -O jdk11.tar.gz
+    sudo rm -rf /usr/lib/jvm
+    sudo mkdir /usr/lib/jvm
+    sudo tar -C /usr/lib/jvm -xvf jdk11.tar.gz
+    rm jdk11.tar.gz
+
+    dotfiles=(.bashrc .zshrc)
+    for dotfile in "${dotfiles[@]}"; do
+      echo "
+# JAVA
+export PATH=\$PATH:/usr/lib/jvm/jdk-11/bin
+export JAVA_HOME=/usr/lib/jvm/jdk-11" >> $HOME/$dotfile
+    done
+
+    # wget https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -O apache-maven.tar.gz
+    # sudo tar -C /opt/apache-maven -xzvf apache-maven.tar.gz
+    # rm apache-maven.tar.gz
+
+    # echo "export PATH=\$PATH:/opt/apache-maven/bin" >> $HOME/.bashrc
+    # echo "export PATH=\$PATH:/opt/apache-maven/bin" >> $HOME/.zshrc
+  else
+    log info "java already installed"
+  fi
 }
 
 clear_screen () {
