@@ -55,6 +55,17 @@ install_git () {
   fi
 }
 
+install_brave () {
+  # https://brave.com/linux/
+
+  if ! command -v brave-browser &>/dev/null; then
+    log info "Installing brave"
+    curl -fsS https://dl.brave.com/install.sh | sh
+  else
+    log info "brave already installed"
+  fi
+}
+
 install_homebrew () {
   # https://brew.sh/
   # Will be installed at /home/linuxbrew/.linuxbrew
