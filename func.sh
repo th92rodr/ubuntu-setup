@@ -1,6 +1,6 @@
 #!/bin/bash
 
-log() {
+log () {
   local level="$1"
   local msg="$2"
   local color=""
@@ -24,6 +24,16 @@ func_final () {
   sudo apt autoremove -y
   sudo apt autoclean
   sudo apt clean
+}
+
+safe_install () {
+  local pkg="$1"
+  if dpkg --status "$pkg" &>/dev/null; then
+    log info "$pkg already installed"
+  else
+    log info "Installing $pkg..."
+    sudo apt install -y "$pkg"
+  fi
 }
 
 install_git () {
