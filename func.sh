@@ -135,6 +135,31 @@ install_docker () {
   fi
 }
 
+install_nvm () {
+  # https://github.com/nvm-sh/nvm
+
+  if [ ! -s "$HOME/.nvm/nvm.sh" ]; then
+    log info "Installing nvm"
+
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  else
+    log info "nvm already installed"
+  fi
+
+  dotfiles=(.bashrc .zshrc)
+  for dotfile in "${dotfiles[@]}"; do
+    if ! grep -q 'export NVM_DIR' "$dotfile"; then
+      cat <<-EOF >> "$dotfile"
+
+# NVM
+export NVM_DIR="\$HOME/.nvm"
+[ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+EOF
+    fi
+  done
+}
+
 install_node () {
   # https://nodejs.org/en/
   # https://github.com/nodesource/distributions/blob/master/README.md
