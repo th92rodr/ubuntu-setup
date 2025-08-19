@@ -455,7 +455,3 @@ export JAVA_HOME=/usr/lib/jvm/jdk-11" >> $HOME/$dotfile
     log info "java already installed"
   fi
 }
-
-clear_screen () {
-  echo -e "\033c"
-}
