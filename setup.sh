@@ -3,6 +3,8 @@
 source ./func.sh
 
 main () {
+  check_os
+
   sudo apt update && sudo apt upgrade -y
 
   basic_packages=(curl wget unzip make gnome-tweaks gcc g++ build-essential tree)
@@ -17,6 +19,18 @@ main () {
   for package in "${packages[@]}"; do
     "install_$package"
   done
+}
+
+check_os () {
+  os=$(uname)
+  if [ "$os" != "Linux" ]; then
+    log error "OS not supported. Only Linux is supported"
+    exit 1
+  fi
+  if ! [[ -f /etc/debian_version ]]; then
+    log error "OS not supported. Only Debian-based distros are supported (like Ubuntu)"
+    exit 1
+  fi
 }
 
 main "$@"
