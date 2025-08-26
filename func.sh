@@ -346,10 +346,10 @@ install_zsh () {
 
   if ! command -v zsh &>/dev/null; then
     log info "Installing zsh"
+    sudo apt install zsh -y
 
     ZSH_PATH=$HOME/.oh-my-zsh
 
-    sudo apt install zsh -y
     git clone https://github.com/robbyrussell/oh-my-zsh.git $ZSH_PATH
     cp $ZSH_PATH/templates/zshrc.zsh-template $HOME/.zshrc
 
@@ -368,11 +368,15 @@ install_zsh () {
     (cd $HOME/gnome-terminal/ && ./install.sh)
     rm -rf $HOME/gnome-terminal
 
-    log info "Installing zsh autosuggestions"
+    log info "Installing zsh plugins"
 
     rm -rf $ZSH_PATH/custom/plugins/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PATH/custom/plugins/zsh-autosuggestions
-    sed -i 's/plugins=(/plugins=(zsh-autosuggestions /' $HOME/.zshrc
+    rm -rf $ZSH_PATH/custom/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_PATH/custom/plugins/zsh-syntax-highlighting
+    sed -i 's/plugins=(/plugins=(zsh-autosuggestions zsh-syntax-highlighting /' $HOME/.zshrc
+
+    sed -i 's/plugins=(/plugins=(docker npm kubectl /' $HOME/.zshrc
 
     /bin/zsh << 'EOF'
 source $HOME/.zshrc
