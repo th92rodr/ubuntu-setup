@@ -7,13 +7,19 @@ main () {
 
   sudo apt update && sudo apt upgrade -y
 
-  basic_packages=(curl wget unzip make gnome-tweaks gcc g++ build-essential tree)
+  basic_packages=(curl wget unzip make gnome-tweaks gcc g++ build-essential)
 
   for package in "${basic_packages[@]}"; do
     safe_install "$package"
   done
 
-  packages=(git brave zsh homebrew vscode docker nvm node yarn tig pyenv bat fd fzf
+  additional_packages=(tree fzf peco)
+
+  for package in "${additional_packages[@]}"; do
+    safe_install "$package"
+  done
+
+  packages=(git brave zsh homebrew vscode docker nvm node yarn tig pyenv bat fd
           protoc kubernetes gcloud golang postman java)
 
   for package in "${packages[@]}"; do

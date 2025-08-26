@@ -247,17 +247,6 @@ install_fd () {
   fi
 }
 
-install_fzf () {
-  # https://github.com/junegunn/fzf
-
-  if ! command -v fzf &>/dev/null; then
-    log info "Installing fzf"
-    sudo apt install fzf -y
-  else
-    log info "fzf already installed"
-  fi
-}
-
 install_protoc () {
   # https://google.github.io/proto-lens/installing-protoc.html
 
