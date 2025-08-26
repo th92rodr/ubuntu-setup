@@ -14,18 +14,6 @@ log () {
   echo -e "${color}[$(date)] $msg\033[0m"
 }
 
-func_initial () {
-  sudo apt update && sudo apt upgrade -y
-  sudo apt install curl wget gnome-tweaks \
-    gcc g++ make build-essential -y
-}
-
-func_final () {
-  sudo apt autoremove -y
-  sudo apt autoclean
-  sudo apt clean
-}
-
 safe_install () {
   local pkg="$1"
   if dpkg --status "$pkg" &>/dev/null; then
