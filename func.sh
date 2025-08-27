@@ -14,6 +14,11 @@ log () {
   echo -e "${color}[$(date)] $msg\033[0m"
 }
 
+log_to_file () {
+  LOG_FILE="/var/log/ubuntu-setup.log"
+  echo "[$(date '+%Y-%m-%d %H:%M:%S %:::z')] $1" | sudo tee -a "$LOG_FILE" > /dev/null
+}
+
 safe_install () {
   local pkg="$1"
   if dpkg --status "$pkg" &>/dev/null; then
