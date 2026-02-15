@@ -32,20 +32,38 @@ safe_install () {
 install_git () {
   if ! command -v git &>/dev/null; then
     log info "Installing git"
-    sudo apt install git -y
-
-    log info "git username:"
-    read git_config_user_name
-    log info "git email:"
-    read git_config_user_email
-
-    cp ./config-files/gitconfig $HOME/.gitconfig
-    git config --global user.name $git_config_user_name
-    git config --global user.email $git_config_user_email
-    git config --global core.editor "code --wait"
+    sudo apt-get install --yes --quiet --quiet git
   else
     log info "git already installed"
   fi
+
+  # Configure git
+  if [ -z "${GIT_USER_NAME:-}" ]; then
+    log info "git username:"
+    read -r GIT_USER_NAME
+  fi
+
+  if [ -z "${GIT_USER_EMAIL:-}" ]; then
+    log info "git email:"
+    read -r GIT_USER_EMAIL
+  fi
+
+  if [ ! -f "$HOME/.gitconfig" ]; then
+    cp ./config-files/gitconfig "$HOME/.gitconfig"
+  fi
+
+  git config --global user.name "${GIT_USER_NAME}"
+  git config --global user.email "${GIT_USER_EMAIL}"
+  git config --global core.editor "code --wait"
+
+  git config --global alias.st "status"
+  git config --global alias.co "commit -m"
+  git config --global alias.ch "checkout"
+  git config --global alias.cm "checkout master"
+  git config --global alias.cb "checkout -b"
+  git config --global alias.unstage "restore --staged ."
+  git config --global alias.lg "log --graph --oneline"
+  git config --global alias.lp "log --pretty=format:'%Cred%h%Creset %C(bold)%cr%Creset %Cgreen<%an>%Creset %s' --max-count=30"
 }
 
 install_brave () {
