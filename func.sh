@@ -395,42 +395,53 @@ install_golang () {
   if ! command -v go &>/dev/null; then
     log info "Installing golang"
 
-    wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz -O go.tar.gz
-    sudo tar -C /usr/local -xzf go.tar.gz
-    rm -rf go.tar.gz
+    local -r GO_VERSION="1.20.14"
+    local -r GO_ARCH="linux-amd64"
+    local -r GO_TARBALL="go${GO_VERSION}.${GO_ARCH}.tar.gz"
+    local -r GO_URL="https://go.dev/dl/${GO_TARBALL}"
+    local -r GO_SHA256="ff445e48af27f93f66bd949ae060d97991c83e11289009d311f25426258f9c44"
 
-    dotfiles=(.bashrc .zshrc)
+    wget --quiet --output-document="${GO_TARBALL}" "${GO_URL}"
+    echo "${GO_SHA256}  ${GO_TARBALL}" | sha256sum --check --quiet
+
+    sudo tar --extract --gzip --file="${GO_TARBALL}" --directory=/usr/local
+    rm --recursive --force "${GO_TARBALL}"
+
+    local -r dotfiles=(.bashrc .zshrc)
     for dotfile in "${dotfiles[@]}"; do
-      if ! grep -q "/usr/local/go/bin" "$HOME/$dotfile"; then
-        echo "
-# Golang
-export PATH=\$PATH:/usr/local/go/bin
-export GOPATH=\$HOME/golib
-export PATH=\$PATH:\$GOPATH/bin
-export GOPATH=\$GOPATH:\$HOME/gocode" >> $HOME/$dotfile
+      if ! grep --quiet "/usr/local/go/bin" "$HOME/$dotfile"; then
+        cat <<-EOF >> "$HOME/$dotfile"
+			# Golang
+			export PATH=\$PATH:/usr/local/go/bin
+			export GOPATH=\$HOME/golib
+			export PATH=\$PATH:\$GOPATH/bin
+			export GOPATH=\$GOPATH:\$HOME/gocode
+		EOF
+        source "$HOME/$dotfile"
       fi
     done
 
-    mkdir -p $HOME/gocode
-    mkdir -p $HOME/golib
+    mkdir --parents "$HOME/gocode" "$HOME/golib"
 
-    go get -u golang.org/x/lint/golint
-    go get -u github.com/golang/dep/cmd/dep
-    go get -u github.com/mdempsky/gocode
-    go get -u github.com/uudashr/gopkgs/v2/cmd/gopkgs
-    go get -u github.com/ramya-rao-a/go-outline
-    go get -u github.com/acroca/go-symbols
-    go get -u golang.org/x/tools/cmd/guru
-    go get -u golang.org/x/tools/cmd/gorename
-    go get -u github.com/cweill/gotests/...
-    go get -u github.com/fatih/gomodifytags
-    go get -u github.com/josharian/impl
-    go get -u github.com/davidrjenni/reftools/cmd/fillstruct
-    go get -u github.com/haya14busa/goplay/cmd/goplay
-    go get -u github.com/godoctor/godoctor
-    go get -u github.com/go-delve/delve/cmd/dlv
-    go get -u github.com/stamblerre/gocode
-    go get -u github.com/rogpeppe/godef
+    export PATH="$PATH:/usr/local/go/bin"
+    export GOPATH="$HOME/golib"
+
+    soft_fail go install golang.org/x/lint/golint@latest
+    soft_fail go install github.com/mdempsky/gocode@latest
+    soft_fail go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
+    soft_fail go install github.com/ramya-rao-a/go-outline@latest
+    soft_fail go install github.com/acroca/go-symbols@latest
+    soft_fail go install golang.org/x/tools/cmd/guru@latest
+    soft_fail go install golang.org/x/tools/cmd/gorename@latest
+    soft_fail go install github.com/cweill/gotests/...@latest
+    soft_fail go install github.com/fatih/gomodifytags@latest
+    soft_fail go install github.com/josharian/impl@latest
+    soft_fail go install github.com/davidrjenni/reftools/cmd/fillstruct@latest
+    soft_fail go install github.com/haya14busa/goplay/cmd/goplay@latest
+    soft_fail go install github.com/godoctor/godoctor@latest
+    soft_fail go install github.com/go-delve/delve/cmd/dlv@latest
+    soft_fail go install github.com/rogpeppe/godef@latest
+
   else
     log info "golang already installed"
   fi
