@@ -10,7 +10,7 @@ main () {
   check_os
 
   export DEBIAN_FRONTEND=noninteractive
-  sudo apt update && sudo apt upgrade -y
+  sudo apt-get update --quiet --quiet && sudo apt-get upgrade --yes --quiet --quiet
 
   configure_timezone
 

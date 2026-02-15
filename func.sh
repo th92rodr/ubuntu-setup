@@ -1,8 +1,8 @@
 #!/bin/bash
 
 log () {
-  local level="$1"
-  local msg="$2"
+  local -r level="$1"
+  local -r msg="$2"
   local color=""
   case "$level" in
     info) color="\033[1;36m";;
@@ -15,17 +15,17 @@ log () {
 }
 
 log_to_file () {
-  LOG_FILE="/var/log/ubuntu-setup.log"
-  echo "[$(date '+%Y-%m-%d %H:%M:%S %:::z')] $1" | sudo tee -a "$LOG_FILE" > /dev/null
+  local -r LOG_FILE="/var/log/ubuntu-setup.log"
+  echo -e "[$(date '+%Y-%m-%d %H:%M:%S %:::z')] $1" | sudo tee --append "$LOG_FILE" > /dev/null
 }
 
 safe_install () {
-  local pkg="$1"
+  local -r pkg="$1"
   if dpkg --status "$pkg" &>/dev/null; then
     log info "$pkg already installed"
   else
     log info "Installing $pkg..."
-    sudo apt install -y "$pkg"
+    sudo apt-get install --yes --quiet --quiet "$pkg"
   fi
 }
 
