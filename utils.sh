@@ -21,3 +21,7 @@ soft_fail () {
     log warn "Error: $*"
   fi
 }
+
+configure_timezone () {
+  sudo ln --force --symbolic /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+}

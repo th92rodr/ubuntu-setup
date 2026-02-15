@@ -9,7 +9,10 @@ trap error_handler ERR
 main () {
   check_os
 
+  export DEBIAN_FRONTEND=noninteractive
   sudo apt update && sudo apt upgrade -y
+
+  configure_timezone
 
   local -r basic_packages=(curl wget unzip make gnome-tweaks gcc g++ build-essential)
 
