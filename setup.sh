@@ -8,6 +8,9 @@ trap error_handler ERR
 
 main () {
   check_os
+  sudo_keep_alive
+
+  log info "Starting..."
 
   export DEBIAN_FRONTEND=noninteractive
   sudo apt-get update --quiet --quiet && sudo apt-get upgrade --yes --quiet --quiet
@@ -44,6 +47,26 @@ check_os () {
     log error "OS not supported. Only Debian-based distros are supported (like Ubuntu)"
     exit 1
   fi
+}
+
+sudo_keep_alive () {
+  # Ask for the password once
+  if ! sudo --validate; then
+    log error "This script needs sudo access to continue"
+    exit 1
+  fi
+
+  # Update existing `sudo` timestamp until script ends
+  (
+    while true; do
+      sudo --non-interactive true
+      sleep 60
+    done
+  ) </dev/null >/dev/null 2>&1 &
+
+  SUDO_PID=$!
+  # Clean up keep-alive on script exit
+  trap 'kill "$SUDO_PID" 2>/dev/null' EXIT
 }
 
 main "$@"
