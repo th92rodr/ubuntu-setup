@@ -69,4 +69,36 @@ sudo_keep_alive () {
   trap 'kill "$SUDO_PID" 2>/dev/null' EXIT
 }
 
+usage () {
+  cat <<-EOF
+		USAGE:
+		  $(basename "$0") [options]
+
+		OPTIONS:
+		  -h, --help    Show this help message and exit
+
+		DESCRIPTION:
+		  Installs and configures common development tools
+		  on Debian-based Linux systems.
+	EOF
+}
+
+parse_args () {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -h|--help)
+        usage
+        exit 0
+        ;;
+      *)
+        log error "Unknown option: $1"
+        usage
+        exit 1
+        ;;
+    esac
+    shift
+  done
+}
+
+parse_args "$@"
 main "$@"
