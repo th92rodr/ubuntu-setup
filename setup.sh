@@ -36,6 +36,8 @@ main () {
     "install_$package"
   done
 
+  add_configs_and_aliases_to_bash_rc_file
+
   if [ -f "$HOME/.bashrc" ]; then
     /bin/bash <<-EOF
 			source $HOME/.bashrc

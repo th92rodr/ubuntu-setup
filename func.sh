@@ -501,3 +501,48 @@ export JAVA_HOME=/usr/lib/jvm/jdk-11" >> $HOME/$dotfile
     log info "java already installed"
   fi
 }
+
+add_configs_and_aliases_to_bash_rc_file () {
+  cat <<-EOF >> "$HOME/.bashrc"
+	HISTTIMEFORMAT=\"%F %T  \"
+
+	# don't put duplicate lines or lines starting with space in the history.
+	HISTCONTROL=ignoreboth
+
+	# append to the history file, don't overwrite it
+	shopt -s histappend
+
+	HISTSIZE=2000
+	HISTFILESIZE=2000
+
+	# Aliases
+
+	# Move to the parent folder.
+	alias ..='cd ..;pwd'
+
+	# Move up two parent folders.
+	alias ...='cd ../..;pwd'
+
+	# Move up three parent folders.
+	alias ....='cd ../../..;pwd'
+
+	# Make a directory and all parent directories with verbosity.
+	alias mkdir='mkdir --parents --verbose'
+
+	# Press c to clear the terminal screen.
+	alias c='clear'
+
+	# Press h to view the bash history.
+	alias h='history'
+
+	# Display the directory structure better.
+	alias tree='tree --dirsfirst -F'
+
+	# Functions
+
+	function hg() { history | grep \"\$1\"; }
+
+	function find_largest_files() { du --human-readable --one-file-system --summarize -- * | sort --reverse --human-numeric-sort | head -20; }
+
+	EOF
+}
