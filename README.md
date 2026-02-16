@@ -2,12 +2,13 @@
 
 A shell script to automate the installation and configuration of essential tools, programming languages, and development utilities on a **Debian-based Linux system**.
 
-This script supports any Debian-based distribution (e.g., Ubuntu, Linux Mint, Pop!_OS, MX Linux, Kali Linux, Parrot OS, Debian).
+This script supports any Debian-based distribution (e.g., `Ubuntu`, `Linux Mint`, `Pop!_OS`, `MX Linux`, `Kali Linux`, `Parrot OS`, `Debian`).
 
 It has been **tested and verified** on:
 
 - ✅ Ubuntu 20.04 LTS
 - ✅ Ubuntu 22.04 LTS
+- ✅ Debian 12.13
 
 > [!NOTE]
 > This script is designed for Debian-based distributions. It may not work on Fedora, Arch, or other non-Debian distros without modifications.
@@ -29,6 +30,7 @@ It has been **tested and verified** on:
 ## 📌 Packages and Programs Installed
 
 ### 🔸 System & Utilities
+
 - [curl](https://curl.se/)
 - `wget`
 - `unzip`
@@ -45,6 +47,7 @@ It has been **tested and verified** on:
 - `gnome-tweaks`
 
 ### 🔸 Development Tools
+
 - [Git](https://git-scm.com/)
 - [Zsh](https://www.zsh.org/)
   - [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh)
@@ -61,6 +64,7 @@ It has been **tested and verified** on:
 - [Postman](https://www.postman.com/)
 
 ### 🔸 Programming Languages & Runtimes
+
 - Node development environment
   - [Node.js](https://nodejs.org/)
   - [Yarn](https://classic.yarnpkg.com/)
@@ -70,6 +74,7 @@ It has been **tested and verified** on:
 - [Pyenv](https://github.com/pyenv/pyenv)
 
 ### 🔸 Browsers & Desktop
+
 - [Brave Browser](https://brave.com/)
 
 ---
@@ -103,12 +108,6 @@ You’ll be prompted once for your `sudo` password. The script will then handle 
 
 You can test this script in a clean environment, using a docker container, without affecting your system.
 
-### Run directly (run as root)
-
-```bash
-docker run -it --name ubuntu-setup-test --rm ubuntu:22.04
-```
-
 ### Run using a Dockerfile (run as a non-root user)
 
 ```bash
@@ -124,4 +123,6 @@ This project is licensed under the [MIT License](LICENSE.md).
 
 ---
 
-## 🎖️ Give it a star if you like this project!
+## Author
+
+[**@th92rodr**](https://github.com/th92rodr)
