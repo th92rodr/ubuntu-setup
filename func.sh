@@ -378,11 +378,6 @@ install_zsh () {
 
     sed -i 's/plugins=(/plugins=(docker npm kubectl /' $HOME/.zshrc
 
-    /bin/zsh << 'EOF'
-source $HOME/.zshrc
-sudo chsh -s /bin/zsh
-EOF
-
   else
     log info "zsh already installed"
   fi

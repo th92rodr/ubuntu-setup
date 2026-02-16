@@ -8,12 +8,12 @@ trap error_handler ERR
 
 main () {
   check_os
-  sudo_keep_alive
+  # sudo_keep_alive
 
   log info "Starting..."
 
-  export DEBIAN_FRONTEND=noninteractive
-  sudo apt-get update --quiet --quiet && sudo apt-get upgrade --yes --quiet --quiet
+  sudo DEBIAN_FRONTEND=noninteractive apt-get update --quiet --quiet
+  sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes --quiet --quiet
 
   configure_timezone
 
@@ -35,6 +35,20 @@ main () {
   for package in "${packages[@]}"; do
     "install_$package"
   done
+
+  if [ -f "$HOME/.bashrc" ]; then
+    /bin/bash <<-EOF
+			source $HOME/.bashrc
+		EOF
+  fi
+
+  if [ -f "$HOME/.zshrc" ]; then
+    /bin/zsh <<-EOF
+			source $HOME/.zshrc
+		EOF
+  fi
+
+  log success "Finished"
 }
 
 check_os () {
